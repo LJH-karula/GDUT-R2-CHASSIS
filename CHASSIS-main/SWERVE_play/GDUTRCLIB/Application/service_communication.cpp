@@ -125,29 +125,29 @@ void CAN2_RxCallBack(CAN_RxBuffer *RxBuffer)
     }
 }
 
-int b=0;
-uint8_t Msg1[23];
+//int b=0;
+//uint8_t Msg1[23];
 //串口DMA接收完毕回调函数，函数名字可以自定义，建议使用消息队列
 uint32_t ROS_UART3_RxCallback(uint8_t* Receive_data, uint16_t data_len)
 {
-    // UART_TxMsg Msg;
-    // if(Recieve_ROS_Port != NULL)
-    // {
-    //     Msg.data_addr = Receive_data;
-    //     Msg.len = data_len;
-    //     Msg.huart = &huart1;
-    //     if(Msg.data_addr != NULL)
-    //         xQueueSendFromISR(Recieve_ROS_Port, &Msg, 0);
-    // }
-    // return 0;
+     UART_TxMsg Msg;
+     if(Recieve_ROS_Port != NULL)
+     {
+         Msg.data_addr = Receive_data;
+         Msg.len = data_len;
+         Msg.huart = &huart1;
+         if(Msg.data_addr != NULL)
+             xQueueSendFromISR(Recieve_ROS_Port, &Msg, 0);
+     }
+     return 0;
 //    uint8_t Msg1[22];
 	
-    if(Recieve_ROS_Port != NULL)
+    /*if(Recieve_ROS_Port != NULL)
     {
         memcpy(Msg1,Receive_data ,23);
         b=ros.Recieve_From_ROS(Msg1);
     }
-    return 0;
+    return 0;*/
     // if(Recieve_IMU_Port != NULL)
     // {
 				
@@ -160,5 +160,5 @@ uint32_t ROS_UART3_RxCallback(uint8_t* Receive_data, uint16_t data_len)
 
 uint8_t Action_Device_Callback()
 {
-    
+    return 0;
 }

@@ -30,3 +30,7 @@ Examples/
 !*.axf
 !*.bin
 !*.hex
+CHASSIS-main/SWERVE_play/MDK-ARM/MOTOR_CPP.uvoptx
+CHASSIS-main/SWERVE_play/MDK-ARM/MOTOR_CPP.uvprojx
+CHASSIS-main/SWERVE_play/MDK-ARM/MOTOR_CPP/MOTOR_CPP.axf
+CHASSIS-main/SWERVE_play/MDK-ARM/MOTOR_CPP/MOTOR_CPP.hex

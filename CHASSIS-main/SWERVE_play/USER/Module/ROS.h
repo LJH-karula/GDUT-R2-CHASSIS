@@ -3,14 +3,20 @@
 #include "drive_uart.h"
 #include "data_pool.h"
 #include "tool.h"
+#include "pid.h"
+#include "math.h"
 
 typedef struct readFromRos
 {
     float x;
     float y;
+    float z;
     float relative_Vx;
     float relative_Vy;
-    unsigned char ctrl_mode;
+    uint8_t ctrl_mode;
+    uint8_t ctrl_flag;
+    uint8_t chassis_init;
+    Robot_Status_t status;
 }readFromRos;
 
 typedef uint32_t (*SystemTick_Fun)(void);
@@ -30,15 +36,22 @@ public:
     }
     void Send_To_ROS(Robot_Twist_t speed);
     int8_t Recieve_From_ROS(uint8_t *buffer);
+    int8_t Recieve_From_ROS_Pos(uint8_t *buffer);
     readFromRos readFromRosData;
     static uint8_t getMicroTick_regist(uint32_t (*getTick_fun)(void));
     static SystemTick_Fun get_systemTick;
+    void Pid_Param_Init(float kp, float ki, float kd,float Integral_Max, float Out_Max, float DeadZone);
+    void Pid_Mode_Init(float LowPass_error, float LowPass_d_err, bool D_of_Current, bool Imcreatement_of_Out);
     
 private:
     UART_TxMsg TxMsg;
     uint8_t header[2];
     uint8_t tail[2];
     uint8_t lenth=0;
+
+    PID PID_position;
 };
-extern ROS ros;
+
+
+//extern ROS ros;
 #endif
