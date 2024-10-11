@@ -1,0 +1,10 @@
+uint8 now_controller_state #控制器当前状态
+uint8 ball_state            #球的状态
+uint8 Put_ball_arrive       #放球到达标志位
+uint8 lock_flag       #堵转标志位
+uint8 touch_flag      #侧边微动开关标志位
+uint8 start_flag      #启动开关标志位
+uint8 red_blue_flag   #红蓝半场标志位
+uint8 restart_flag    #重启标志位
+uint8 if_auto_flag    #是否自动标志位
+uint8 test_cnt        #计数器

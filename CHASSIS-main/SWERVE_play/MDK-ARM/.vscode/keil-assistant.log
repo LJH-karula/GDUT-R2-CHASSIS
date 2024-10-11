@@ -1,0 +1,50 @@
+[info] Log at : 2024/9/10|14:10:19|GMT+0800
+
+[info] Log at : 2024/9/10|14:10:41|GMT+0800
+
+[info] Log at : 2024/9/11|11:22:44|GMT+0800
+
+[info] Log at : 2024/9/12|19:11:22|GMT+0800
+
+[info] Log at : 2024/9/15|10:51:13|GMT+0800
+
+[info] Log at : 2024/9/15|21:54:46|GMT+0800
+
+[info] Log at : 2024/9/15|21:55:10|GMT+0800
+
+[info] Log at : 2024/9/15|21:55:39|GMT+0800
+
+[info] Log at : 2024/9/18|11:39:23|GMT+0800
+
+[info] Log at : 2024/9/18|11:39:50|GMT+0800
+
+[info] Log at : 2024/9/19|17:14:14|GMT+0800
+
+[info] Log at : 2024/9/29|18:06:02|GMT+0800
+
+[info] Log at : 2024/9/29|18:23:11|GMT+0800
+
+[info] Log at : 2024/9/29|18:23:15|GMT+0800
+
+[info] Log at : 2024/9/29|18:29:13|GMT+0800
+
+[SyntaxError: Expected double-quoted property name in JSON at position 5072 (line 107 column 9)
+	at JSON.parse (<anonymous>)
+	at F.updateCppProperties (c:\Users\Lenovo\.vscode\extensions\cl.keil-assistant-1.7.0\dist\extension.js:1:10911)
+	at F.<anonymous> (c:\Users\Lenovo\.vscode\extensions\cl.keil-assistant-1.7.0\dist\extension.js:1:12641)
+	at Generator.next (<anonymous>)
+	at c:\Users\Lenovo\.vscode\extensions\cl.keil-assistant-1.7.0\dist\extension.js:1:4542
+	at new Promise (<anonymous>)
+	at r (c:\Users\Lenovo\.vscode\extensions\cl.keil-assistant-1.7.0\dist\extension.js:1:4287)
+	at F.load (c:\Users\Lenovo\.vscode\extensions\cl.keil-assistant-1.7.0\dist\extension.js:1:11372)
+	at w.<anonymous> (c:\Users\Lenovo\.vscode\extensions\cl.keil-assistant-1.7.0\dist\extension.js:1:8799)
+	at Generator.next (<anonymous>)
+	at a (c:\Users\Lenovo\.vscode\extensions\cl.keil-assistant-1.7.0\dist\extension.js:1:4344)]
+[info] Log at : 2024/9/29|18:29:28|GMT+0800
+
+[info] Log at : 2024/10/10|19:30:31|GMT+0800
+
+[info] Log at : 2024/10/10|19:30:37|GMT+0800
+
+[info] Log at : 2024/10/11|12:20:01|GMT+0800
+
