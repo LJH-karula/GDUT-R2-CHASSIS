@@ -12,6 +12,7 @@
 #include "ROS.h"
 #include "air_joy.h"
 #include "Broadcast.h"
+#include "fsm_joy.h"
 
 
 #define PriorityVeryLow       1
@@ -34,6 +35,5 @@ void motor_init(void);
 #ifdef  __cplusplus
 }
 #endif                                
-
 
 #endif //  SERVICE_CONFIG_H

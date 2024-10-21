@@ -35,7 +35,10 @@ void Chassis_Task(void *pvParameters)
 
 void Chassis_Pid_Init(void)
 {   
-    chassis.accel_vel = 1.5;
+    chassis.accel_vel = SWERVE_MAX_ACCEL_VEL;
+    chassis.Speed_Max.linear.x = SWERVE_MAX_SPEED_X;
+    chassis.Speed_Max.linear.y = SWERVE_MAX_SPEED_Y;
+    chassis.Speed_Max.angular.z = SWERVE_MAX_SPEED_Z;
 
     chassis.Pid_Param_Init(RUDDER_LEFT_FRONT_Speed_E,12, 0.1, 0, 400, 30000, 0);
     chassis.Pid_Param_Init(RUDDER_RIGHT_FRONT_Speed_E,12, 0.1, 0, 400, 30000, 0);
@@ -57,16 +60,13 @@ void Chassis_Pid_Init(void)
     chassis.Pid_Mode_Init(RUDDER_LEFT_REAR_Pos_E, 0.8, 0.1, true, false);
     chassis.Pid_Mode_Init(RUDDER_RIGHT_REAR_Pos_E, 0.8, 0.1, true, false);
 	
-	float lf_offset=(53.0f+15+180)/360 * 8192.0f;
-	float rf_offset=(53.0f+60+180)/360 * 8192.0f;
-	float rr_offset = (53.0f+120)/360 * 8192.0f;
-	float lr_offset = (53.0f+0.0f)/360 * 8192.0f; 
+	float lf_offset = (53.0f+WHEEL1_OFFSET)/360 * 8192.0f;  //右前轮
+	float rf_offset = (53.0f+WHEEL2_OFFSET)/360 * 8192.0f;  //左前轮
+	float rr_offset = (53.0f+WHEEL3_OFFSET)/360 * 8192.0f;  //左后轮
+	float lr_offset = (53.0f+WHEEL4_OFFSET)/360 * 8192.0f;  //右后轮
     RudderMotor[0].set_encoder_offset(lf_offset);
     RudderMotor[1].set_encoder_offset(rf_offset);
     RudderMotor[2].set_encoder_offset(rr_offset);
     RudderMotor[3].set_encoder_offset(lr_offset);
 
-    chassis.Speed_Max.linear.x = 3;
-    chassis.Speed_Max.linear.y = 3;
-    chassis.Speed_Max.angular.z = 4;
 }

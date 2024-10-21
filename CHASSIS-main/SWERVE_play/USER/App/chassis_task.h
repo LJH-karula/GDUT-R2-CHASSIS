@@ -2,6 +2,7 @@
 
 #include "data_pool.h"
 #include "chassis.h"
+#include "robot_def.h"
 
 
 #ifdef __cplusplus

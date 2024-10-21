@@ -13,6 +13,10 @@
 #include "drive_tim.h"
 #include "chassis_task.h"
 #include "IMU.h"
+#include "robot_def.h"
+
+class ROS ros;
+
 
 //int c;
 //int8_t msg[11];
@@ -25,74 +29,76 @@ void Air_Joy_Task(void *pvParameters)
 #if USE_ROS_CONTROL
             ROS_Cmd_Process();
 #else 
-            Robot_Twist_t twist;
-            if(air_joy.SWA>1950&&air_joy.SWA<2050)       //ros控制模式（拨杆1<SWA>——2档位）
-            {
-                ROS_Cmd_Process();
-            }
-            else if(air_joy.SWA>950&&air_joy.SWA<1050)   //手动模式（拨杆1<SWA>——1档位）
-            {
-                if(air_joy.LEFT_X>1400&&air_joy.LEFT_X<1600)
-                    air_joy.LEFT_X = 1500;
-                if(air_joy.LEFT_Y>1400&&air_joy.LEFT_Y<1600)
-                    air_joy.LEFT_Y = 1500;
-                if(air_joy.RIGHT_X>1400&&air_joy.RIGHT_X<1600)
-                    air_joy.RIGHT_X = 1500;
-                if(air_joy.RIGHT_Y>1400&&air_joy.RIGHT_Y<1600)  
-                    air_joy.RIGHT_Y = 1500;
+			Robot_Twist_t twist;
+            if(air_joy.LEFT_X>1475&&air_joy.LEFT_X<1525)
+                air_joy.LEFT_X = 1500;
+            if(air_joy.LEFT_Y>1475&&air_joy.LEFT_Y<1525)
+                air_joy.LEFT_Y = 1500;
+            if(air_joy.RIGHT_X>1475&&air_joy.RIGHT_X<1525)
+                air_joy.RIGHT_X = 1500;
+            if(air_joy.RIGHT_Y>1475&&air_joy.RIGHT_Y<1525)  
+                air_joy.RIGHT_Y = 1500;
 
-                if(air_joy.LEFT_X!=0||air_joy.LEFT_Y!=0||air_joy.RIGHT_X!=0||air_joy.RIGHT_Y!=0)
+            if(air_joy.LEFT_X!=0||air_joy.LEFT_Y!=0||air_joy.RIGHT_X!=0||air_joy.RIGHT_Y!=0)
+            {
+                if(air_joy.SWA>1950&&air_joy.SWA<2050)      //总开关——拨杆1<SWA>   (1档位关闭 2档位开启)
                 {
-                    if(air_joy.SWC>950&&air_joy.SWC<1050)           //运动模式（拨杆2<SWC>）
-                    {
-                        twist.chassis_mode = NORMAL;        //正常模式（1档位）
-                    }
-                    else if(air_joy.SWC>1450&&air_joy.SWC<1550)   
-                    {
-                        twist.chassis_mode = X_MOVE;        //x轴平移模式（2档位）
-                    }
-                    else if(air_joy.SWC>1950&&air_joy.SWC<2050)
-                    {
-                        twist.chassis_mode = Y_MOVE;        //y轴平移模式（3档位）
-                    }
-                    else
-                    {
-                        twist.chassis_mode = NORMAL;
-                    }
-                    
+                        if(air_joy.SWD>950&air_joy.SWD<1050)        //手动模式——拨杆4<SWD>  (1档位)
+                        {
+                                if(air_joy.SWC>950&&air_joy.SWC<1050)           //普通模式——拨杆3<SWC>  (1档位)
+                                {
+                                        twist.chassis_mode = NORMAL;
+                                }
+                                else if(air_joy.SWC>1450&&air_joy.SWC<1550)     //x轴平移模式——拨杆3<SWC>  (2档位)
+                                {
+                                        twist.chassis_mode = X_MOVE;
+                                }
+                                else if(air_joy.SWC>1950&&air_joy.SWC<2050)     //y轴平移模式——拨杆3<SWC>  (3档位)
+                                {
+                                        twist.chassis_mode = Y_MOVE;
+                                }
+                                else
+                                {
+                                        twist.chassis_mode = NORMAL;
+                                }
+                                
+                                /*if(air_joy.SWB>950&&air_joy.SWB<1050)
+                                {
+                                    HAL_GPIO_WritePin(GPIOE,GPIO_PIN_6,GPIO_PIN_RESET);//翻转收起
+                                }
+                                else if(air_joy.SWB>1450&&air_joy.SWB<1550)
+                                {
+                                    HAL_GPIO_WritePin(GPIOE,GPIO_PIN_6,GPIO_PIN_SET);//翻转翻出
+                                }
+                                else
+                                {
+                                    HAL_GPIO_WritePin(GPIOE,GPIO_PIN_6,GPIO_PIN_RESET);//翻转收起
+                                }
 
-                    /*if(air_joy.SWB>950&&air_joy.SWB<1050)
-                    {
-                        HAL_GPIO_WritePin(GPIOE,GPIO_PIN_6,GPIO_PIN_RESET);//翻转收起
-                    }
-                    else if(air_joy.SWB>1450&&air_joy.SWB<1550)
-                    {
-                        HAL_GPIO_WritePin(GPIOE,GPIO_PIN_6,GPIO_PIN_SET);//翻转翻出
-                    }
-                    else
-                    {
-                        HAL_GPIO_WritePin(GPIOE,GPIO_PIN_6,GPIO_PIN_RESET);//翻转收起
-                    }
-
-                    if(air_joy.SWD>950&&air_joy.SWD<1050)
-                    {
-                        HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_RESET);//爪子张开
-                    }
-                    else if(air_joy.SWD>1950&&air_joy.SWD<2050)
-                    {
-                        HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_SET);//爪子闭合
-                    }*/                                                                      
-                    //  <不用了先注释掉>
-                    
-                    twist.linear.x = (air_joy.LEFT_X - 1500)/500.0 * 3;
-                    twist.linear.y = (air_joy.LEFT_Y - 1500)/500.0 * 3;
-                    twist.angular.z = (air_joy.RIGHT_X - 1500)/500.0 * 4;
-                    xQueueSend(Chassia_Port, &twist, 0);                   
+                                if(air_joy.SWD>950&&air_joy.SWD<1050)
+                                {
+                                    HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_RESET);//爪子张开
+                                }
+                                else if(air_joy.SWD>1950&&air_joy.SWD<2050)
+                                {
+                                    HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_SET);//爪子闭合
+                                }*/                                                                      
+                                //  <不用了先注释掉>
+                                
+                                twist.linear.x = (air_joy.LEFT_Y - 1500)/500.0 * 3;
+                                twist.linear.y = (air_joy.LEFT_X - 1500)/500.0 * 3;
+                                twist.angular.z = (air_joy.RIGHT_X - 1500)/500.0 * 4;
+                                xQueueSend(Chassia_Port, &twist, 0);
+                        }
+                        else if(air_joy.SWD>1950&air_joy.SWD<2050)      //ros控制模式——拨杆4<SWD>  (2档位)
+                        {
+                                ROS_Cmd_Process();
+                        }
                 }
             }
             else
             {
-                memset(&twist,0,sizeof(Robot_Twist_t));
+							memset(&twist,0,sizeof(Robot_Twist_t));
             }
 
 #endif
@@ -120,8 +126,7 @@ void Broadcast_Task(void *pvParameters)
 
 // ROS ros;
 void ROS_Cmd_Process(void)
-{
-static ROS ros;
+{	
     static uint32_t dt=0,now=0,last=0;;
     dt = now - last;    //ms
     UART_TxMsg Msg;
@@ -160,8 +165,16 @@ static ROS ros;
     }
 
     if(ctrl_flag == 1)
-        xQueueSend(Chassia_Port, &twist_ros, 0);
+    xQueueSend(Chassia_Port, &twist_ros, 0);
     now = ros.get_systemTick()/1000;    //ms
 
     xQueueSend(Broadcast_Port, &status, 0);
+}
+
+
+
+void Point_tracking_PID_Init(void)
+{
+    ros.Point_tracking_PID_Mode_Init(POINT_TRACK_LOWPASS_ERROR, POINT_TRACK_LOWPASS_D_ERR, POINT_TRACK_D_OF_CURRENT, POINT_TRACK_IMCREATEMENT_OF_OUT);
+	ros.Point_tracking_PID_Param_Init(POINT_TRACK_KP,POINT_TRACK_KI,POINT_TRACK_KD,POINT_TRACK_I_TERM_MAX,POINT_TRACK_OUT_MAX,POINT_TRACK_DEADZONE);
 }

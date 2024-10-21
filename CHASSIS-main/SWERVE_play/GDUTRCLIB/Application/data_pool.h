@@ -27,8 +27,6 @@
 //舵轮底盘加速度开启
 #define USE_VEL_ACCEL 1
 
-//使用ROS控制舵轮底盘
-#define USE_ROS_CONTROL 0
 
 //使用调试任务
 #define USE_DEBUG_TASK 0

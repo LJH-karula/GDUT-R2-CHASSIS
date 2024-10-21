@@ -5,6 +5,7 @@
 #include "tool.h"
 #include "pid.h"
 #include "math.h"
+#include "robot_def.h"
 
 typedef struct readFromRos
 {
@@ -40,8 +41,8 @@ public:
     readFromRos readFromRosData;
     static uint8_t getMicroTick_regist(uint32_t (*getTick_fun)(void));
     static SystemTick_Fun get_systemTick;
-    void Pid_Param_Init(float kp, float ki, float kd,float Integral_Max, float Out_Max, float DeadZone);
-    void Pid_Mode_Init(float LowPass_error, float LowPass_d_err, bool D_of_Current, bool Imcreatement_of_Out);
+		void Point_tracking_PID_Mode_Init(float LowPass_error, float LowPass_d_err, bool D_of_Current, bool Imcreatement_of_Out);
+		void Point_tracking_PID_Param_Init(float Kp, float Ki, float Kd, float Integral_Max, float Out_Max, float DeadZone);
     
 private:
     UART_TxMsg TxMsg;

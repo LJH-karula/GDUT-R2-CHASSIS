@@ -15,6 +15,8 @@ void Air_Joy_Task(void *pvParameters);
 void Broadcast_Task(void *pvParameters);
 extern int c;
 extern int8_t msg[11];
+	
+void Point_tracking_PID_Init(void);
 
 #ifdef __cplusplus
 }

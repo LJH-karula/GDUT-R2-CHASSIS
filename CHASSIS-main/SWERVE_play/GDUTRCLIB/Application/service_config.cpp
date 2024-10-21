@@ -12,6 +12,7 @@
 
 Swerve_Chassis chassis(0.055,0,0.321,4);
 
+
 void System_Resource_Init(void)
 {
     DataPool_Init();
@@ -33,6 +34,7 @@ void App_Init(void)
 {
     Set_PwmDuty(&htim10, TIM_CHANNEL_1, 0);
     Chassis_Pid_Init();
+    Point_tracking_PID_Init();
     PidTimer::getMicroTick_regist(Get_SystemTimer);
     AirJoy::getMicroTick_regist(Get_SystemTimer);
     ROS::getMicroTick_regist(Get_SystemTimer);
