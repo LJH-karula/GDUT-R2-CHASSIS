@@ -30,15 +30,18 @@ void Air_Joy_Task(void *pvParameters)
             ROS_Cmd_Process();
 #else 
 			Robot_Twist_t twist;
-            if(air_joy.LEFT_X>1475&&air_joy.LEFT_X<1525)
-                air_joy.LEFT_X = 1500;
-            if(air_joy.LEFT_Y>1475&&air_joy.LEFT_Y<1525)
-                air_joy.LEFT_Y = 1500;
-            if(air_joy.RIGHT_X>1475&&air_joy.RIGHT_X<1525)
-                air_joy.RIGHT_X = 1500;
-            if(air_joy.RIGHT_Y>1475&&air_joy.RIGHT_Y<1525)  
-                air_joy.RIGHT_Y = 1500;
-
+						if(abs(air_joy.LEFT_X-1500)<100 && abs(air_joy.LEFT_Y-1500)<100)
+						{
+							if(air_joy.LEFT_X>1465&&air_joy.LEFT_X<1535)
+									air_joy.LEFT_X = 1500;
+							if(air_joy.LEFT_Y>1465&&air_joy.LEFT_Y<1535)
+									air_joy.LEFT_Y = 1500;
+							if(air_joy.RIGHT_X>1465&&air_joy.RIGHT_X<1535)
+									air_joy.RIGHT_X = 1500;
+							if(air_joy.RIGHT_Y>1465&&air_joy.RIGHT_Y<1535)  
+									air_joy.RIGHT_Y = 1500;
+					    }
+						
             if(air_joy.LEFT_X!=0||air_joy.LEFT_Y!=0||air_joy.RIGHT_X!=0||air_joy.RIGHT_Y!=0)
             {
                 if(air_joy.SWA>1950&&air_joy.SWA<2050)      //总开关——拨杆1<SWA>   (1档位关闭 2档位开启)
