@@ -3,6 +3,7 @@
 #include "data_pool.h"
 #include "chassis.h"
 #include "robot_def.h"
+#include "drive_iwdg.h"
 
 
 #ifdef __cplusplus

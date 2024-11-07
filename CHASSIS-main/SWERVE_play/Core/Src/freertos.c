@@ -96,6 +96,13 @@ const osThreadAttr_t Broadcast_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for IWDG_detecting */
+osThreadId_t IWDG_detectingHandle;
+const osThreadAttr_t IWDG_detecting_attributes = {
+  .name = "IWDG_detecting",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityHigh,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -109,6 +116,7 @@ extern void UART_Send_Task(void *argument);
 extern void User_Debug_Task(void *argument);
 extern void Air_Joy_Task(void *argument);
 extern void Broadcast_Task(void *argument);
+extern void IWDG_detecting_Task(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -159,6 +167,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of Broadcast */
   BroadcastHandle = osThreadNew(Broadcast_Task, NULL, &Broadcast_attributes);
+
+  /* creation of IWDG_detecting */
+  IWDG_detectingHandle = osThreadNew(IWDG_detecting_Task, NULL, &IWDG_detecting_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
 

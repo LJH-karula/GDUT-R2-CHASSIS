@@ -1,12 +1,15 @@
-*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\keil 5\ARM\ARMCC\Bin'
 Build target 'MOTOR_CPP'
+compiling service_config.cpp...
+Warning: C3910W: Old syntax, please use '--cpp11'.
+compiling drive_iwdg.c...
+compiling chassis_task.cpp...
+Warning: C3910W: Old syntax, please use '--cpp11'.
 compiling fsm_joy.cpp...
 Warning: C3910W: Old syntax, please use '--cpp11'.
-..\USER\App\fsm_joy.cpp(21): warning:  #177-D: variable "Msg"  was declared but never referenced
-  	int8_t Msg[11];
-..\USER\App\fsm_joy.cpp: 1 warning, 0 errors
 linking...
-Program Size: Code=44936 RO-data=1664 RW-data=332 ZI-data=23812  
-FromELF: creating hex file...
-"MOTOR_CPP\MOTOR_CPP.axf" - 0 Error(s), 1 Warning(s).
-Build Time Elapsed:  00:00:03
+MOTOR_CPP\MOTOR_CPP.axf: Error: L6218E: Undefined symbol SysGuard_Reg(SG_TypeDef*) (referred from chassis_task.o).
+MOTOR_CPP\MOTOR_CPP.axf: Error: L6218E: Undefined symbol SysGuard_Reload(SG_TypeDef*) (referred from chassis_task.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 2 error messages.
+"MOTOR_CPP\MOTOR_CPP.axf" - 2 Error(s), 0 Warning(s).
+Target not created.

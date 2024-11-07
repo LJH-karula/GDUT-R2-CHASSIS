@@ -14,6 +14,15 @@ void Chassis_Task(void *pvParameters)
 {
     static Robot_Twist_t twist;
     // Robot_Twist_t real_twist;
+
+    SG_TypeDef *SysGuard;
+    SG_TypeDef Chassis_Task_IWDG;
+    Chassis_Task_IWDG.Enable = 1;
+    Chassis_Task_IWDG.Counter = 100;
+    Chassis_Task_IWDG.reload_count = 100;
+    Chassis_Task_IWDG.errcallback = NULL;
+
+    SysGuard =SysGuard_Reg(&Chassis_Task_IWDG);
     for(;;)
     {   
         if(xQueueReceive(Chassia_Port, &twist, 0) == pdPASS)
@@ -26,7 +35,7 @@ void Chassis_Task(void *pvParameters)
         //未测试，将逆向解算的底盘速度(机器人坐标系)发送到ROS
         // real_twist = chassis.Get_Robot_Speed();
         // xQueueSend(Send_ROS_Port, &real_twist, 0);
-			
+		SysGuard_Reload(SysGuard);   //“喂狗”
         osDelay(1);
     }
 }

@@ -14,6 +14,7 @@
 #include "chassis_task.h"
 #include "IMU.h"
 #include "robot_def.h"
+#include "drive_iwdg.h"
 
 class ROS ros;
 
@@ -23,9 +24,18 @@ class ROS ros;
 void Air_Joy_Task(void *pvParameters)
 {
 	//int8_t Msg[11];
+
+    SG_TypeDef *SysGuard;
+    SG_TypeDef fsm_joy_Task_IWDG;
+    fsm_joy_Task_IWDG.Enable = 1;
+    fsm_joy_Task_IWDG.Counter = 100;
+    fsm_joy_Task_IWDG.reload_count = 100;  //100ms
+    fsm_joy_Task_IWDG.errcallback = NULL;
+
+    SysGuard =SysGuard_Reg(&fsm_joy_Task_IWDG);
     for(;;)
     {
-        
+        SysGuard_Reload(SysGuard);   //“喂狗”
 #if USE_ROS_CONTROL
             ROS_Cmd_Process();
 #else 
